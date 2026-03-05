@@ -8,36 +8,36 @@ Disclaimer: This document provides general Kubernetes troubleshooting guidance. 
 
 ## Table of Contents
 
-1. [Quick Reference — Cluster Access](#2-quick-reference--cluster-access)
-2. [Node Problems](#3-node-problems)
-   - 2.1 [Node NotReady](#31-node-notready)
-   - 2.2 [Kured Reboots](#32-kured-reboots)
-   - 2.3 [Azure-Initiated Node Restarts](#33-azure-initiated-node-restarts)
-   - 2.4 [CPU Pressure / Memory Pressure](#34-cpu-pressure--memory-pressure)
-   - 2.5 [Disk Pressure](#35-disk-pressure)
-   - 2.6 [PID Pressure](#36-pid-pressure)
-   - 2.7 [Node Scaling Issues (VMSS)](#37-node-scaling-issues-vmss)
-3. [Pod / Container Restarts](#4-pod--container-restarts)
-   - 3.1 [CrashLoopBackOff](#41-crashloopbackoff)
-   - 3.2 [OOMKilled](#42-oomkilled)
-   - 3.3 [Pod Stuck in Pending](#43-pod-stuck-in-pending)
-   - 3.4 [Pod Stuck in Terminating](#44-pod-stuck-in-terminating)
-   - 3.5 [ImagePullBackOff](#45-imagepullbackoff)
-   - 3.6 [Pod Evicted](#46-pod-evicted)
-   - 3.7 [Init Container Failures](#47-init-container-failures)
-4. [Networking Issues](#5-networking-issues)
-   - 4.1 [Service Unreachable](#51-service-unreachable)
-   - 4.2 [Ingress / NGINX Issues](#52-ingress--nginx-issues)
-   - 4.3 [Istio Service Mesh Issues](#53-istio-service-mesh-issues)
-   - 4.4 [DNS Resolution Failures](#54-dns-resolution-failures)
-   - 4.5 [NAT Gateway / External Connectivity](#55-nat-gateway--external-connectivity)
+1. [Environment Overview](#1-environment-overview)
+2. [Quick Reference — Cluster Access](#2-quick-reference--cluster-access)
+3. [Node Problems](#3-node-problems)
+   - 3.1 [Node NotReady](#31-node-notready)
+   - 3.2 [Kured Reboots](#32-kured-reboots)
+   - 3.3 [Azure-Initiated Node Restarts](#33-azure-initiated-node-restarts)
+   - 3.4 [CPU Pressure / Memory Pressure](#34-cpu-pressure--memory-pressure)
+   - 3.5 [Disk Pressure](#35-disk-pressure)
+   - 3.6 [PID Pressure](#36-pid-pressure)
+   - 3.7 [Node Scaling Issues (VMSS)](#37-node-scaling-issues-vmss)
+4. [Pod / Container Restarts](#4-pod--container-restarts)
+   - 4.1 [CrashLoopBackOff](#41-crashloopbackoff)
+   - 4.2 [OOMKilled](#42-oomkilled)
+   - 4.3 [Pod Stuck in Pending](#43-pod-stuck-in-pending)
+   - 4.4 [Pod Stuck in Terminating](#44-pod-stuck-in-terminating)
+   - 4.5 [ImagePullBackOff](#45-imagepullbackoff)
+   - 4.6 [Pod Evicted](#46-pod-evicted)
+   - 4.7 [Init Container Failures](#47-init-container-failures)
+5. [Networking Issues](#5-networking-issues)
+   - 5.1 [Service Unreachable](#51-service-unreachable)
+   - 5.2 [Ingress / NGINX Issues](#52-ingress--nginx-issues)
+   - 5.3 [Istio Service Mesh Issues](#53-istio-service-mesh-issues)
+   - 5.4 [DNS Resolution Failures](#54-dns-resolution-failures)
+   - 5.5 [NAT Gateway / External Connectivity](#55-nat-gateway--external-connectivity)
 6. [Resource Quota & Limits](#6-resource-quota--limits)
 7. [Helm / Deployment Failures](#7-helm--deployment-failures)
 8. [Storage Issues](#8-storage-issues)
 9. [Certificate & Secret Issues](#9-certificate--secret-issues)
 10. [Monitoring & Observability](#10-monitoring--observability)
-    - 10.1 [Dynatrace OneAgent Issues](#101-dynatrace-oneagent-issues)
-    - 10.2 [Metrics Server Issues](#102-metrics-server-issues)
+    - 10.1 [Metrics Server Issues](#102-metrics-server-issues)
 11. [Security — Twistlock / Pod Security](#11-security--twistlock--pod-security)
 12. [HPA / KEDA Autoscaling Issues](#12-hpa--keda-autoscaling-issues)
 13. [Redis Issues](#13-redis-issues)
@@ -47,7 +47,22 @@ Disclaimer: This document provides general Kubernetes troubleshooting guidance. 
 17. [Useful One-Liners & Scripts](#17-useful-one-liners--scripts)
 
 ---
-## 1. Quick Reference — Cluster Access
+## 1. Environment Overview
+
+###  Pre-Requisites
+Before starting, make sure you have info of Cluster, Region, Resource Group, and Environment.
+
+
+### Kured Reboot Window
+It is recommended to get KURED Reboot schedule which will help you following this document. For Example:
+- **Days:** Sunday, Wednesday, Friday
+- **Start:** 08:00 AM ET
+- **End:** 010:00 AM ET
+- **Period:** 30 minutes
+
+--- 
+
+## 2. Quick Reference — Cluster Access
 
 ### AKS — Get Credentials
 
@@ -1121,7 +1136,7 @@ az keyvault secret list --vault-name <VAULT_NAME> -o table
 
 ## 10. Monitoring & Observability
 
-### 10.2 Metrics Server Issues
+### 10.1 Metrics Server Issues
 
 #### Step-by-Step Commands
 
