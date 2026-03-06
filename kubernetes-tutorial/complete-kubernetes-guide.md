@@ -1,7 +1,7 @@
 # Kubernetes: Complete Guide (Beginner to Advanced)
 
 > **Author:** Afraz Hassan <br>
-> **Last Updated:** March 2, 2026
+> **Last Updated:** March 6, 2026
 ---
 
 ## Table of contents
